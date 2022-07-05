@@ -1,0 +1,87 @@
+.root {
+	position: fixed;
+	z-index: 9999;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	padding: 1rem;
+}
+
+.root.bgActive {
+	background: #181D23;
+}
+
+.root .navWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	max-width: 1400px;
+	padding: 0 2rem;
+}
+
+.root .brand {
+	font-size: 1.6rem;
+	color: #FAFAFA;
+	cursor: default;
+}
+
+/***** Menu Button *****/
+.menuButton {
+	position: relative;
+	width: 30px;
+	height: 22px;
+	outline: none;
+}
+
+.menuButton span,
+.menuButton span::before,
+.menuButton span::after {
+	position: absolute;
+	width: 30px;
+	height: 3px;
+	content: "";
+	background: #FAFAFA;
+	transition: 500ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.menuButton span {
+	position: relative;
+	top: 50%;
+	display: block;
+	transform: translate(0, -50%);
+}
+
+.menuButton span::before {
+	top: -8px;
+}
+
+.menuButton span::after {
+	top: 8px;
+}
+
+.menuButton:hover > span,
+.menuButton:hover > span::before,
+.menuButton:hover > span::after {
+	background: #F300B4;
+}
+
+.menuButton.active > span {
+	background: transparent;
+}
+
+.menuButton.active > span::before {
+	top: 0;
+	transform: rotate(-225deg);
+}
+
+.menuButton.active > span::after {
+	top: 0;
+	transform: rotate(225deg);
+}
+
+@media only screen and (max-width: 849px) {
+	#navbar {
+		background: #181D23AA;
+	}
+}

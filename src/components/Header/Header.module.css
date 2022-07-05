@@ -1,0 +1,223 @@
+.root {
+	position: relative;
+	z-index: 1;
+	min-height: 100vh;
+	margin: 0 auto;
+	background: #202736;
+	background: linear-gradient(to bottom, #181D23 0%, #202736 80%);
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.root::before {
+	position: fixed;
+	z-index: -1;
+	width: 100%;
+	min-height: 100vh;
+	content: "";
+	background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Stars.svg?sanitize=true);
+	background-attachment: fixed;
+	opacity: 0;
+	animation: stars-move-in 1000ms 300ms forwards;
+}
+
+@keyframes stars-move-in {
+	from {
+		background-position-y: -100px;
+	}
+
+	to {
+		background-position-y: 0;
+		opacity: 1;
+	}
+}
+
+.forest {
+	position: absolute;
+	bottom: -300px;
+	left: 0;
+	width: 100%;
+	height: 80%;
+	background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Trees.svg?sanitize=true) bottom left repeat-x;
+	background-size: cover;
+	border-bottom: 300px solid #181D23;
+	opacity: 0;
+	animation: forest-move-in 1000ms 500ms forwards;
+}
+
+@keyframes forest-move-in {
+	from {
+		background-position-y: 150%;
+	}
+
+	to {
+		background-position-y: 100%;
+		opacity: 1;
+	}
+}
+
+.silhouette {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 50%;
+	height: 50%;
+	background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Silhouette.svg?sanitize=true) bottom left no-repeat;
+	opacity: 0;
+	animation: silhouette-move-in 1000ms 800ms forwards;
+}
+
+@keyframes silhouette-move-in {
+	from {
+		background-position-x: 0;
+	}
+
+	to {
+		background-position-x: 50%;
+		opacity: 1;
+	}
+}
+
+.moon {
+	position: absolute;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Moon.svg?sanitize=true) right 150% no-repeat;
+	background-attachment: fixed;
+	background-size: 30% 30%;
+	opacity: 0;
+	animation: moon-move-in 1.2s 1s forwards;
+}
+
+@keyframes moon-move-in {
+	from {
+		background-position: right 150%;
+		opacity: 0;
+	}
+
+	to {
+		background-position: top right;
+		opacity: 1;
+	}
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 55%;
+	width: fit-content;
+	opacity: 0;
+	transform: translate(-50%, -50%);
+	animation: text-fade-in 1000ms 800ms forwards;
+}
+
+@keyframes text-fade-in {
+	from {
+		right: 0;
+	}
+
+	to {
+		right: 25%;
+		opacity: 1;
+	}
+}
+
+.container h1 {
+	font-size: 65px;
+	font-style: italic;
+	font-weight: normal;
+	line-height: 65px;
+	color: #FAFAFA;
+}
+
+.container p {
+	margin-bottom: 24px;
+	font-size: 28px;
+	font-weight: normal;
+	line-height: 32px;
+	color: #FAFAFA;
+}
+
+@media only screen and (max-width: 649px) {
+	.container {
+		top: 10%;
+		right: 50%;
+		width: 80%;
+		transform: translate(50%, 0);
+		animation: text-fade-in 1000ms 800ms forwards;
+	}
+
+	@keyframes text-fade-in {
+		from {
+			right: 0;
+		}
+
+		to {
+			right: 50%;
+			opacity: 1;
+		}
+	}
+
+	.silhouette {
+		width: 100%;
+	}
+}
+
+.button,
+.button:visited {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 240px;
+	padding: 1rem;
+	font-size: 1rem;
+	color: #FAFAFA;
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+	border: 1px solid #FAFAFA;
+	transition: all ease-in-out 0.25s;
+}
+
+.button,
+.button:visited {
+	font-weight: bold;
+	color: #FAFAFA;
+	background: #F300B4;
+	border: 1px solid transparent;
+	outline: none;
+}
+
+.button:hover {
+	color: #F300B4;
+	background: transparent;
+	border: 1px solid #F300B4;
+	outline: none;
+	transition: all ease-in-out 0s;
+}
+
+.button:active {
+	padding: 1.05rem 1rem calc(0.95rem - 1px) calc(1rem - 1px);
+	color: #F300B4;
+	background: transparent;
+	border: 1px solid #F300B4;
+	border-top: 2px solid;
+	border-right: 2px solid;
+	outline: none;
+	transition: all ease-in-out 0s;
+}
+
+.button:disabled {
+	cursor: not-allowed;
+	opacity: 0.4;
+}
+
+.button:disabled:hover {
+	color: #FAFAFA;
+	background: #F300B4;
+	border: 1px solid transparent;
+}

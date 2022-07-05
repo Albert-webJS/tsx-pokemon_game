@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useLocation, Routes, Route } from "react-router-dom";
+import { MenuHeader, Footer } from "./components";
+import { HomePage, GamePage, AboutPage, ContactPage, NotFound } from "./routes";
+import cn from "classnames";
+import clasess from "./App.module.css";
+import { FirebaseContext } from "./context/firebaseContext";
+import Firebase from "./service/firebase";
 
-function App() {
+const firebaseInstance = Firebase.getInstance();
+
+const App = () => {
+  const location = useLocation();
+  const isPadding = location.pathname === "/" || location.pathname === "/game/board";
+  const bgActive = location.pathname === "/";
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FirebaseContext.Provider
+      value={firebaseInstance}
+    >
+      <MenuHeader bgActive={!isPadding} />
+      <div
+        className={cn(clasess.wrap, {
+          [clasess.isPadding]: isPadding,
+        })}
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="game/*" element={<GamePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+      <Footer bgActive={!bgActive}/>
+    </FirebaseContext.Provider>
   );
-}
+};
 
 export default App;

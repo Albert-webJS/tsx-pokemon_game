@@ -1,0 +1,95 @@
+.root {
+	position: relative;
+	z-index: 5;
+	clip-path: polygon(0 0, 20% 5%, 100% 0, 100% 100%, 80% 95%, 0 100%);
+	font-size: 1.4rem;
+	background: #FAFAFA;
+	background-attachment: fixed;
+}
+
+.root .wrapper {
+	max-width: 1400px;
+	padding: 5rem 1rem 2rem;
+	margin: 0 auto;
+}
+
+.root article {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 1rem;
+	padding: 3rem 0;
+}
+
+.root .title {
+	display: flex;
+	flex-direction: column;
+	grid-column-end: span 4;
+	align-items: center;
+}
+
+.root .title h3 {
+	font-size: 2.4rem;
+}
+
+.root .separator {
+	width: 150px;
+	height: 2px;
+	padding: 0;
+	margin: 1rem 0;
+	background: #F300B4;
+}
+
+.root .subtitle {
+	padding-bottom: 1.5rem;
+	font-size: 1.6rem;
+	color: inherit;
+	text-align: center;
+}
+
+.root p {
+	padding-bottom: 1.5rem;
+	line-height: 1.9rem;
+	color: #FFF;
+}
+
+.root .desc.full {
+	grid-column-end: span 4;
+	margin-bottom: 2rem;
+	border-radius: 40px;
+}
+
+.root .desc {
+	grid-column-end: span 2;
+	padding: 2rem;
+	text-align: justify;
+	background: rgb(49 47 47 / 70%);
+}
+
+@media only screen and (max-width: 1149px) {
+	.root article {
+		grid-template-columns: 1fr;
+		grid-gap: 0;
+	}
+
+	.root .desc.full {
+		grid-column-end: -1;
+	}
+
+	.root .desc {
+		grid-column-end: -1;
+	}
+}
+
+@media only screen and (max-width: 949px) {
+	.root {
+		clip-path: polygon(0 0, 20% 2%, 100% 0, 100% 100%, 80% 98%, 0 100%);
+		background-position: top left;
+		background-size: cover;
+	}
+}
+
+@media only screen and (max-width: 649px) {
+	.root .wrapper {
+		padding: 10rem 2rem 8rem;
+	}
+}

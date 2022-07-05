@@ -1,0 +1,70 @@
+.wrapper {
+	text-align: center;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-gap: 40px;
+}
+
+.card {
+	width: 100%;
+	height: 380px;
+	cursor: pointer;
+}
+
+.button,
+.button:visited {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 240px;
+	padding: 1rem;
+	margin-bottom: 20px;
+	font-size: 1rem;
+	color: #FAFAFA;
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+	border: 1px solid #FAFAFA;
+	transition: all ease-in-out 0.25s;
+}
+
+.button,
+.button:visited {
+	font-weight: bold;
+	color: #FAFAFA;
+	background: #F300B4;
+	border: 1px solid transparent;
+	outline: none;
+}
+
+.button:hover {
+	color: #F300B4;
+	background: transparent;
+	border: 1px solid #F300B4;
+	outline: none;
+	transition: all ease-in-out 0s;
+}
+
+.button:active {
+	padding: 1.05rem 1rem calc(0.95rem - 1px) calc(1rem - 1px);
+	color: #F300B4;
+	background: transparent;
+	border: 1px solid #F300B4;
+	border-top: 2px solid;
+	border-right: 2px solid;
+	outline: none;
+	transition: all ease-in-out 0s;
+}
+
+.button:disabled {
+	cursor: not-allowed;
+	opacity: 0.4;
+}
+
+.button:disabled:hover {
+	color: #FAFAFA;
+	background: #F300B4;
+	border: 1px solid transparent;
+}
