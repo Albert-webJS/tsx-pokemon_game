@@ -1,11 +1,11 @@
-import { Pokemon } from "../interfaces/Pokemon";
+import { IPokemon } from "../interfaces/IPokemon";
 
-export type PokemonsType = Record<string, Pokemon>;
+export type PokemonsType = Record<string, IPokemon>;
 
 export interface IFirebase {
     initPokemonSoket(cb: (data: PokemonsType) => void): void;
     getPokemonsOnce(): Promise<PokemonsType>;
-    postPokemon(key: string, pokemon: Pokemon): void;
-    addPokemon(pokemon: Pokemon): void;
+    postPokemon(key: string, pokemon: IPokemon): void;
+    addPokemon(pokemon: IPokemon): void;
     offPokemonSoket(): void;
 }

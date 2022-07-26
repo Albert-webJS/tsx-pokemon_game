@@ -20,23 +20,17 @@
 	width: 100%;
 	max-width: 240px;
 	padding: 1rem;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 	font-size: 1rem;
+	font-weight: bold;
 	color: #FAFAFA;
 	text-align: center;
 	text-transform: uppercase;
 	cursor: pointer;
-	border: 1px solid #FAFAFA;
-	transition: all ease-in-out 0.25s;
-}
-
-.button,
-.button:visited {
-	font-weight: bold;
-	color: #FAFAFA;
 	background: #F300B4;
 	border: 1px solid transparent;
 	outline: none;
+	transition: all ease-in-out 0.25s;
 }
 
 .button:hover {

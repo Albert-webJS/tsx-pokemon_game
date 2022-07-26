@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import 'firebase/database';
-import { Pokemon } from "../interfaces/Pokemon";
+import { IPokemon } from "../interfaces/IPokemon";
 import firebaseConfig from '../assets/firebaseconfig.json';
 import { IFirebase } from './IFirebase';
 import { PokemonsType } from './IFirebase';
@@ -38,11 +38,11 @@ class Firebase implements IFirebase {
         return snapshot.val();
     }
 
-    postPokemon(key: string, pokemon: Pokemon): void {
+    postPokemon(key: string, pokemon: IPokemon): void {
         this.database.ref(`pokemons/${key}`).set(pokemon);
     }
 
-    addPokemon(pokemon: Pokemon): void {
+    addPokemon(pokemon: IPokemon): void {
         const newKey = this.database.ref().child("pokemons").push().key;
         this.database.ref("pokemons/" + newKey).set(pokemon);
     }

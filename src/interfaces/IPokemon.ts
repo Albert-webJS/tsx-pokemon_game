@@ -14,8 +14,10 @@ interface Values {
     left: number | string;
 }
 
-export interface Pokemon {
+export interface IPokemon {
+    player?: number
     abilities?: string[];
+    possession?: string;
     stats?: Stats;
     type: string;
     img: string;

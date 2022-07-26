@@ -1,8 +1,15 @@
 import { NavbarProps } from "./Navbar.props";
 import clasess from "./Navbar.module.css";
 import cn from "classnames";
+import {ReactComponent as LogoSVG} from "../../../assets/Logo (1).svg";
+import {ReactComponent as LoginAuth} from "../../../assets/loginAuth.svg";
 
-export const Navbar = ({ bgActive, isOpen, onClickHamburg }: NavbarProps) => {
+export const Navbar = ({
+  bgActive,
+  isOpen,
+  onClickHamburg,
+  onClickLogin,
+}: NavbarProps) => {
   const handleClick = (): void => {
     onClickHamburg && onClickHamburg();
   };
@@ -14,14 +21,21 @@ export const Navbar = ({ bgActive, isOpen, onClickHamburg }: NavbarProps) => {
       })}
     >
       <div className={clasess.navWrapper}>
-        <p className={clasess.brand}>LOGO</p>
-        <div
-          className={cn(clasess.menuButton, {
-            [clasess.active]: isOpen,
-          })}
-          onClick={handleClick}
-        >
-          <span />
+        <div className={clasess.brand}>
+          <LogoSVG />
+        </div>
+        <div className={clasess.loginAndMenu}>
+          <div className={clasess.loginWrap} onClick={onClickLogin}>
+            <LoginAuth />
+          </div>
+          <div
+            className={cn(clasess.menuButton, {
+              [clasess.active]: isOpen,
+            })}
+            onClick={handleClick}
+          >
+            <span />
+          </div>
         </div>
       </div>
     </nav>

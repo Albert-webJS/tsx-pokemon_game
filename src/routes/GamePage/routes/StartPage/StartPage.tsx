@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../../../../components";
 import clasess from "./StartPage.module.css";
-import { Pokemon } from "../../../../interfaces/Pokemon";
+import { IPokemon } from "../../../../interfaces/IPokemon";
 import { PokemonContext } from "../../../../context/pokemonContext";
 
 export const StartPage = (): JSX.Element => {
@@ -35,7 +35,7 @@ export const StartPage = (): JSX.Element => {
       </button>
       <div className={clasess.grid}>
         {Object.entries(pokemonContext?.pokemons ?? {}).map(
-          ([key, pokemon]: [string, Pokemon]) => (
+          ([key, pokemon]: [string, IPokemon]) => (
             <GameCard
               key={key}
               pokemon={pokemon}
@@ -43,10 +43,7 @@ export const StartPage = (): JSX.Element => {
               isActive={true}
               isSelected={pokemon.selected}
               onClickCard={() => {
-                if (
-                  Object.keys(pokemonContext?.selectedPokemons ?? {}).length <=
-                  5
-                ) {
+                if (Object.keys(pokemonContext?.selectedPokemons ?? {}).length <= 5) {
                   handleСhangeSelected(key);
                 }
               }}

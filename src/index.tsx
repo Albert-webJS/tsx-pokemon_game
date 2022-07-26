@@ -3,7 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import WebFont from "webfontloader";
 import App from "./App";
 
+import store from "./store/store";
 import "./index.css";
+import { Provider } from "react-redux";
 
 WebFont.load({
   google: {
@@ -12,10 +14,12 @@ WebFont.load({
 });
 
 const container = document.getElementById("root") as HTMLElement;
-
 const root = createRoot(container);
+
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

@@ -1,32 +1,168 @@
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { GameCard } from "../../../../components/GameCard/GameCard";
+import { Result } from "../../../../components/Result/Result";
+import { PlayerBoard } from "./component/PlayerBoard/PlayerBoard";
 import { PokemonContext } from "../../../../context/pokemonContext";
+import { IBoard } from "../../../../interfaces/IBoard";
+import { IPokemon } from "../../../../interfaces/IPokemon";
 import clasess from "./BoardPage.module.css";
+
+const counterWin = (
+  board: IBoard[],
+  player1: IPokemon[],
+  player2: IPokemon[]
+) => {
+  let playerCounter1: number = player1.length;
+  let playerCounter2: number = player2.length;
+
+  board.forEach((boardPosition: IBoard) => {
+    if (boardPosition.card?.possession === "red") {
+      playerCounter1++;
+    }
+    if (boardPosition.card?.possession === "blue") {
+      playerCounter2++;
+    }
+  });
+  return [playerCounter1, playerCounter2];
+};
 
 export const BoardPage = (): JSX.Element => {
   const pokemonContext = useContext(PokemonContext);
+  const [steps, setSteps] = useState<number>(0);
+  const [board, setBoard] = useState<IBoard[]>([]);
+  const [choiceCard, setChoiceCard] = useState<IPokemon | null>(null);
+  const [playerOne, setPlayerOne] = useState<IPokemon[]>(() => {
+    return Object.values(pokemonContext?.pokemons ?? {}).map(
+      (pokemon: IPokemon) => ({
+        ...pokemon,
+        possession: "blue",
+      })
+    );
+  });
+  const [playerTwo, setPlayerTwo] = useState<IPokemon[]>([]);
+
   const navigate = useNavigate();
   const convertData = Object.keys(pokemonContext?.selectedPokemons ?? {});
 
+  const getDataBoard = async () => {
+    const boardResponse = await fetch(
+      "https://reactmarathon-api.netlify.app/api/board"
+    );
+    const boardRequest = await boardResponse.json();
+
+    setBoard(boardRequest.data);
+  };
+  const getDataPlayer = async () => {
+    const playerTwoResponse = await fetch(
+      "https://reactmarathon-api.netlify.app/api/create-player"
+    );
+    const playerTwoRequest = await playerTwoResponse.json();
+
+    setPlayerTwo(() => {
+      return playerTwoRequest.data.map((pokemon: IPokemon) => ({
+        ...pokemon,
+        possession: "red",
+      }));
+    });
+  };
+
   useEffect(() => {
-    if (convertData.length === 0) {
-      navigate("/game", {replace: true});
+    getDataBoard();
+    getDataPlayer();
+  }, []);
+
+  useEffect(() => {
+    if (steps === 9) {
+      const [count1, count2] = counterWin(board, playerOne, playerTwo);
+
+      if (count1 > count2) {
+        console.log("win...");
+        <Result type="win"/>;
+      } else if (count1 < count2) {
+        console.log("lose...");
+        <Result type="lose" />;
+      } else {
+        console.log("draw...");
+        <Result type="draw" />;
+      }
     }
-  });
+  }, [steps, board, playerOne, playerTwo]);
+
+  if (convertData.length === 0) {
+    navigate("/game", { replace: true });
+  }
+
+  const handleClickBoardSquare = async (position: number): Promise<void> => {
+    if (choiceCard) {
+      const params = {
+        position,
+        card: choiceCard,
+        board,
+      };
+      const response = await fetch(
+        "https://reactmarathon-api.netlify.app/api/players-turn",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(params),
+        }
+      );
+      const request = await response.json();
+
+      if (choiceCard?.player === 1) {
+        setPlayerOne((prevState: IPokemon[]) =>
+          prevState.filter((pokemon: IPokemon) => pokemon.id !== choiceCard.id)
+        );
+      }
+
+      if (choiceCard?.player === 2) {
+        setPlayerTwo((prevState: IPokemon[]) =>
+          prevState.filter((pokemon: IPokemon) => pokemon.id !== choiceCard.id)
+        );
+      }
+      setBoard(request.data);
+      setSteps((prevCount: number) => prevCount + 1);
+    }
+  };
 
   return (
     <div className={clasess.root}>
-      <div className={clasess.playerOne}></div>
+      <div className={clasess.playerOne}>
+        <PlayerBoard
+          player={1}
+          cards={playerOne}
+          onClickCard={(card) => setChoiceCard(card)}
+        />
+      </div>
       <div className={clasess.board}>
-        <div className={clasess.boardPlate}>1</div>
-        <div className={clasess.boardPlate}>2</div>
-        <div className={clasess.boardPlate}>3</div>
-        <div className={clasess.boardPlate}>4</div>
-        <div className={clasess.boardPlate}>5</div>
-        <div className={clasess.boardPlate}>6</div>
-        <div className={clasess.boardPlate}>7</div>
-        <div className={clasess.boardPlate}>8</div>
-        <div className={clasess.boardPlate}>9</div>
+        {board.map((square: IBoard) => (
+          <div
+            key={square.position}
+            className={clasess.boardPlate}
+            onClick={() =>
+              !square.card && handleClickBoardSquare(square.position)
+            }
+          >
+            {square.card && (
+              <GameCard
+                pokemon={square.card}
+                {...square.card}
+                isActive
+                minimize
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className={clasess.playerTwo}>
+        <PlayerBoard
+          player={2}
+          cards={playerTwo}
+          onClickCard={(card) => setChoiceCard(card)}
+        />
       </div>
     </div>
   );

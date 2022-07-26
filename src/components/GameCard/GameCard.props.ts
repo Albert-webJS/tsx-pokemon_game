@@ -1,16 +1,20 @@
 import { ReactNode } from "react";
-import { Pokemon } from "../../interfaces/Pokemon";
+import { IBoard } from "../../interfaces/IBoard";
+import { IPokemon } from "../../interfaces/IPokemon";
 
 
 export interface GameCardProps {
-    key: number | string;
-    pokemon: Pokemon;
+    key?: number | string;
+    pokemon: IPokemon;
     children?: ReactNode;
     onClickCard?: (id: number) => void;
     className?: string;
-    isActive: boolean;
+    isActive?: boolean;
     minimize?: boolean;
     isSelected?: boolean;
+    square?: IBoard
+    // position?: number;
+    // card?: Pokemon;s
     
 }
 

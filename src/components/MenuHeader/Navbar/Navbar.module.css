@@ -21,9 +21,23 @@
 }
 
 .root .brand {
+	width: 70px;
 	font-size: 1.6rem;
-	color: #FAFAFA;
 	cursor: default;
+}
+
+.brand svg {
+	width: 100%;
+	height: 100%;
+}
+
+.brand svg g {
+	fill: #FFF;
+	transition: ease-in-out 0.25s;
+}
+
+.brand:hover svg g {
+	fill: #F300B4;
 }
 
 /***** Menu Button *****/
@@ -84,4 +98,28 @@
 	#navbar {
 		background: #181D23AA;
 	}
+}
+
+.loginAndMenu {
+	display: flex;
+}
+
+.loginWrap {
+	width: 22px;
+	height: 22px;
+	margin-right: 12px;
+}
+
+.loginWrap svg {
+	width: 100%;
+	height: 100%;
+}
+
+.loginWrap svg g {
+	fill: #FFF;
+	transition: ease-in-out 0.25s;
+}
+
+.loginWrap:hover svg g {
+	fill: #F300B4;
 }

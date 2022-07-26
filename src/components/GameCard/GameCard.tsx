@@ -3,7 +3,7 @@ import clasess from "./GameCard.module.css";
 import cn from "classnames";
 
 export const GameCard = ({
-  pokemon: { values, name, id, type, img },
+  pokemon: { values, name, id, type, img, possession },
   minimize,
   className,
   isActive,
@@ -23,7 +23,13 @@ export const GameCard = ({
     >
       <div className={clasess.cardFront}>
         <div className={cn(clasess.wrap, clasess.front)}>
-          <div className={cn(clasess.pokemon, clasess[type])}>
+          <div
+            className={cn(
+              clasess.pokemon,
+              clasess[type],
+              possession ? clasess[possession] : null
+            )}
+          >
             <div className={clasess.values}>
               <div className={cn(clasess.count, clasess.top)}>{values.top}</div>
               <div className={cn(clasess.count, clasess.right)}>

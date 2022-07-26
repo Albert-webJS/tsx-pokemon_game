@@ -1,12 +1,13 @@
 import { useLocation, Routes, Route } from "react-router-dom";
-import { MenuHeader, Footer } from "./components";
+import { MenuHeader, Footer, FullScren } from "./components";
 import { HomePage, GamePage, AboutPage, ContactPage, NotFound } from "./routes";
 import cn from "classnames";
 import clasess from "./App.module.css";
 import { FirebaseContext } from "./context/firebaseContext";
 import Firebase from "./service/firebase";
 
-const firebaseInstance = Firebase.getInstance();
+
+export const firebaseInstance = Firebase.getInstance();
 
 const App = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const App = () => {
         })}
       >
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<FullScren component={<HomePage/>}/>} />
           <Route path="game/*" element={<GamePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
