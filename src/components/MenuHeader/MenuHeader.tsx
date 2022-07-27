@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Menu } from "./Menu/Menu";
 import { Navbar } from "./Navbar/Navbar";
 import { Modal } from "../Modal/Modal";
+import { TypeUserInfo } from "../LoginForm/LoginForm.props";
+
+const ApiKey = "AIzaSyCMBWoOpCWZIJXXFryYI47JvvV7VB4MmtY";
 
 export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -15,8 +18,23 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
   const handleClickLogin = (): void => {
     setOpenModal((prevState) => !prevState);
   };
-  const handleLoginFormInfo = (props: any): void => {
-    console.log("props: ", props);
+  const handleLoginFormInfo = async ({
+    email,
+    password,
+  }: TypeUserInfo): Promise<void> => {
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+        returnSecureToken: true,
+      }),
+    };
+    const response = await fetch(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${ApiKey}`,
+      requestOptions
+    );
+    console.log("response: ", response);
   };
   return (
     <>
@@ -27,11 +45,7 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
         bgActive={bgActive}
         onClickLogin={handleClickLogin}
       />
-      <Modal
-        isOpen={isOpenModal}
-        isClose={handleClickLogin}
-        title="is modal..."
-      >
+      <Modal isOpen={isOpenModal} isClose={handleClickLogin} title="Log in..">
         <LoginForm onSubmit={handleLoginFormInfo} />
       </Modal>
     </>

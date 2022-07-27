@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Input } from "./Input/Input";
 import { LoginFormProps } from "./LoginForm.props";
+import clasess from "./LoginForm.module.css";
 
 export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -8,10 +9,11 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    onSubmit && onSubmit({
-      email,
-      password,
-    });
+    onSubmit &&
+      onSubmit({
+        email,
+        password,
+      });
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -29,7 +31,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
         name="password"
         onChange={setPassword}
       />
-      <button>LOGIN</button>
+      <button className={clasess.button}>LOGIN</button>
     </form>
   );
 };

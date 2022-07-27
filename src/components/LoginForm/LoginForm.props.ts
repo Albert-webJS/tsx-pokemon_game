@@ -1,3 +1,8 @@
+export type TypeUserInfo = {
+    email: string;
+    password: string;
+};
+
 export interface LoginFormProps {
-    onSubmit: (props: Record<string, string>) => void;
+    onSubmit: (props: TypeUserInfo) => void;
 }
