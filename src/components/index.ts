@@ -7,3 +7,4 @@ export * from './Result/Result';
 export * from './Modal/Modal';
 export * from './LoginForm/LoginForm';
 export * from './FullScren/FullScren';
+export * from './PrivateRoute/PrivateRoute';

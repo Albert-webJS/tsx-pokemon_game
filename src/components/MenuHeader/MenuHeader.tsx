@@ -5,6 +5,7 @@ import { Menu } from "./Menu/Menu";
 import { Navbar } from "./Navbar/Navbar";
 import { Modal } from "../Modal/Modal";
 import { TypeUserInfo } from "../LoginForm/LoginForm.props";
+import { NotificationManager } from "react-notifications";
 
 const ApiKey = "AIzaSyCMBWoOpCWZIJXXFryYI47JvvV7VB4MmtY";
 
@@ -34,7 +35,15 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${ApiKey}`,
       requestOptions
     );
-    console.log("response: ", response);
+    const request = await response.json();
+    console.log("data: ", request);
+    // eslint-disable-next-line no-prototype-builtins
+    if (request.hasOwnProperty("error")) {
+      NotificationManager.error(request.error.message, "Wrong!");
+    } else {
+      localStorage.setItem("IdToken", request.idToken);
+      NotificationManager.success("Success message");
+    }
   };
   return (
     <>
@@ -46,7 +55,7 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
         onClickLogin={handleClickLogin}
       />
       <Modal isOpen={isOpenModal} isClose={handleClickLogin} title="Log in..">
-        <LoginForm onSubmit={handleLoginFormInfo} />
+        <LoginForm onSubmit={handleLoginFormInfo} isResetFiled={!isOpenModal} />
       </Modal>
     </>
   );

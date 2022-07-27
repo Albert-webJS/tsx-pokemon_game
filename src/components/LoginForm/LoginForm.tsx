@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "./Input/Input";
 import { LoginFormProps } from "./LoginForm.props";
 import clasess from "./LoginForm.module.css";
 
-export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
+export const LoginForm = ({
+  onSubmit,
+  isResetFiled = false,
+}: LoginFormProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+  }, [isResetFiled]);
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
