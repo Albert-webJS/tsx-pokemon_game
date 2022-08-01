@@ -1,8 +1,11 @@
 import { NavbarProps } from "./Navbar.props";
 import clasess from "./Navbar.module.css";
 import cn from "classnames";
-import {ReactComponent as LogoSVG} from "@assets/Logo (1).svg";
-import {ReactComponent as LoginAuth} from "@assets/loginAuth.svg";
+import { ReactComponent as LogoSVG } from "@assets/Logo (1).svg";
+import { ReactComponent as LoginAuth } from "@assets/loginAuth.svg";
+import { ReactComponent as UserSVG } from "@assets/userSVG.svg";
+import { useSelector } from "react-redux";
+import { secectGetLocalId, selectUserLoading } from "../../../store/user/user";
 
 export const Navbar = ({
   bgActive,
@@ -10,6 +13,10 @@ export const Navbar = ({
   onClickHamburg,
   onClickLogin,
 }: NavbarProps) => {
+  const isLoadingUser = useSelector(selectUserLoading);
+  const localId = useSelector(secectGetLocalId);
+  console.log("isLoadingUser: ", isLoadingUser);
+  console.log("localId: ", localId);
   const handleClick = (): void => {
     onClickHamburg && onClickHamburg();
   };
@@ -25,9 +32,16 @@ export const Navbar = ({
           <LogoSVG />
         </div>
         <div className={clasess.loginAndMenu}>
-          <div className={clasess.loginWrap} onClick={onClickLogin}>
-            <LoginAuth />
-          </div>
+          {!isLoadingUser && !localId && (
+            <div className={clasess.loginWrap} onClick={onClickLogin}>
+              <LoginAuth />
+            </div>
+          )}
+          {!isLoadingUser && localId && (
+            <div className={clasess.loginWrap} onClick={onClickLogin}>
+              <UserSVG />
+            </div>
+          )}
           <div
             className={cn(clasess.menuButton, {
               [clasess.active]: isOpen,
