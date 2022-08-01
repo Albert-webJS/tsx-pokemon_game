@@ -1,3 +1,22 @@
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 18px;
+}
+
+.link {
+	font-size: 1.4rem;
+	color: #252934;
+	text-decoration: none;
+	cursor: pointer;
+	transition: 200ms;
+}
+
+.link:hover {
+	color: #F300B4;
+}
+
 .button,
 .button:visited {
 	box-sizing: border-box;

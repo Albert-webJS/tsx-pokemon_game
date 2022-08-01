@@ -1,4 +1,5 @@
 export type TypeUserInfo = {
+    type: string;
     email: string;
     password: string;
 };

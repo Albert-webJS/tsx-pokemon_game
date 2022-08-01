@@ -1,8 +1,8 @@
 import { NavbarProps } from "./Navbar.props";
 import clasess from "./Navbar.module.css";
 import cn from "classnames";
-import {ReactComponent as LogoSVG} from "../../../assets/Logo (1).svg";
-import {ReactComponent as LoginAuth} from "../../../assets/loginAuth.svg";
+import {ReactComponent as LogoSVG} from "@assets/Logo (1).svg";
+import {ReactComponent as LoginAuth} from "@assets/loginAuth.svg";
 
 export const Navbar = ({
   bgActive,

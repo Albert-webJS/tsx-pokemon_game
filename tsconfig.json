@@ -23,5 +23,9 @@
   "include": [
     "src",
     "./declaration.d.ts"
-  ]
+  ],
+  "paths": {
+    "@/assets": ["src/assets/*"],
+  }
+
 }

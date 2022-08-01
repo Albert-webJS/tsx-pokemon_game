@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Input } from "./Input/Input";
 import { LoginFormProps } from "./LoginForm.props";
-import clasess from "./LoginForm.module.css";
+import classes from "./LoginForm.module.css";
 
 export const LoginForm = ({
   onSubmit,
@@ -9,6 +9,7 @@ export const LoginForm = ({
 }: LoginFormProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLogin, setLogin] = useState<boolean>(true);
 
   useEffect(() => {
     setEmail("");
@@ -19,6 +20,7 @@ export const LoginForm = ({
     event.preventDefault();
     onSubmit &&
       onSubmit({
+        type: isLogin ? "login" : "signup",
         email,
         password,
       });
@@ -39,7 +41,14 @@ export const LoginForm = ({
         name="password"
         onChange={setPassword}
       />
-      <button className={clasess.button}>LOGIN</button>
+      <div className={classes.flex}>
+        <button className={classes.button}>
+          {isLogin ? "Login" : "Signup"}
+        </button>
+        <div className={classes.link} onClick={() => setLogin(!isLogin)}>
+          {isLogin ? "Register" : "Login"}
+        </div>
+      </div>
     </form>
   );
 };
