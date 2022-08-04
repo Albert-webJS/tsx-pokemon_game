@@ -1,7 +1,7 @@
 import { AnyAction, createSlice, Dispatch } from "@reduxjs/toolkit";
-import { firebaseInstance } from "../../App";
 import { IPokemon } from "../../interfaces/IPokemon";
-
+import firebaseConfig from '@assets/firebaseconfig.json';
+import { UseGetLocalId } from "../../hooks/useGetLocalId";
 
 export const slice = createSlice({
     name: "pokemons",
@@ -32,10 +32,16 @@ export const slice = createSlice({
 
 export const { fetchPokemons, fetchPokemonsResolve, fetchPokemonsReject } = slice.actions;
 
+const { databaseName } = firebaseConfig;
+
 
 export const getPokemonsAsync = async (dispatch: Dispatch<AnyAction>) => {
+    const IdToken = localStorage.getItem("IdToken");
+    const localId = UseGetLocalId();
     dispatch(fetchPokemons());
-    const data = await firebaseInstance.getPokemonsOnce();
+    const response = await fetch(`https://${databaseName}.firebaseio.com/${localId}/pokemons.json?auth=${IdToken}`);
+    const data = await response.json();
+    console.log("data: ", data);
     dispatch(fetchPokemonsResolve(data));
 };
 

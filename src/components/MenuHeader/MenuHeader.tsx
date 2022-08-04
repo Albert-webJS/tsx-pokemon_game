@@ -6,32 +6,39 @@ import { Navbar } from "./Navbar/Navbar";
 import { Modal } from "../Modal/Modal";
 import { TypeUserInfo } from "../LoginForm/LoginForm.props";
 import { NotificationManager } from "react-notifications";
+import firebaseconfig from "@assets/firebaseconfig.json";
+import { IUserSingUP } from "../../interfaces/IUserSingUp";
+import { IUserLogin } from "../../interfaces/IUserLogin";
 
-const ApiKey = "AIzaSyCMBWoOpCWZIJXXFryYI47JvvV7VB4MmtY";
+const { apiKey } = firebaseconfig;
 
-const signup = async (key: string, options: RequestInit): Promise<void> => {
+const signup = async (
+  key: string,
+  options: RequestInit
+): Promise<IUserSingUP> => {
   const response = await fetch(
     `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`,
     options
   );
   const request = await response.json();
-  console.log("signup: ", request);
   return request;
 };
-const login = async (key: string, options: RequestInit): Promise<void> => {
+const login = async (
+  key: string,
+  options: RequestInit
+): Promise<IUserLogin> => {
   const response = await fetch(
     `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`,
     options
   );
   const request = await response.json();
-  console.log("login: ", request);
   return request;
 };
 const loginSignUpUser = async ({
   type,
   email,
   password,
-}: TypeUserInfo): Promise<T> => {
+}: TypeUserInfo): Promise<IUserSingUP | IUserLogin | string> => {
   const requestOptions = {
     method: "POST",
     body: JSON.stringify({
@@ -42,9 +49,9 @@ const loginSignUpUser = async ({
   };
   switch (type) {
     case "signup":
-      return await signup(ApiKey, requestOptions);
+      return await signup(apiKey, requestOptions);
     case "login":
-      return await login(ApiKey, requestOptions);
+      return await login(apiKey, requestOptions);
     default:
       return "I can't login user";
   }
@@ -60,27 +67,36 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
   const handleClickLogin = (): void => {
     setOpenModal((prevState) => !prevState);
   };
-  const handleLoginFormInfo = async (props: TypeUserInfo): Promise<void> => { 
+
+  const handleLoginFormInfo = async (props: TypeUserInfo): Promise<void> => {
     const response = await loginSignUpUser(props);
+    console.log("response: ", response);
 
     // eslint-disable-next-line no-prototype-builtins
     if (response.hasOwnProperty("error")) {
       NotificationManager.error(response.error.message, "Wrong!");
     } else {
-      if (props.type === "signup") {
-        const getStartingColectionCard = await fetch("https://reactmarathon-api.herokuapp.com/api/pokemons/starter");
+      if (props.type === "signup" && typeof response !== "string") {
+        const getStartingColectionCard = await fetch(
+          "https://reactmarathon-api.herokuapp.com/api/pokemons/starter"
+        );
         const request = await getStartingColectionCard.json();
-        
+
         for (const pokemon of request.data) {
-          await fetch(`https://pokemon-card-4d341-default-rtdb.firebaseio.com/${response.localId}/pokemons.json?aith=${response.idToken}`, {
-            method: "POST",
-            body: JSON.stringify(pokemon),
-          });
+          await fetch(
+            `https://pokemon-card-4d341-default-rtdb.firebaseio.com/${response.localId}/pokemons.json?aith=${response.idToken}`,
+            {
+              method: "POST",
+              body: JSON.stringify(pokemon),
+            }
+          );
         }
       }
-      localStorage.setItem("IdToken", response.idToken);
-      NotificationManager.success("Success message");
-      handleClickLogin();
+      if (typeof response !== "string") {
+        localStorage.setItem("idToken", response.idToken);
+        NotificationManager.success("Success message");
+        handleClickLogin();
+      }
     }
   };
   return (

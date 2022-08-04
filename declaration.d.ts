@@ -7,4 +7,5 @@ declare module '*.css' {
 declare module "*.svg";
 declare module '*.jpeg';
 declare module '*.png';
+declare module '*.json';
 declare module 'react-notifications';

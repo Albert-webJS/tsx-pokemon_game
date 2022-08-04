@@ -15,8 +15,6 @@ export const Navbar = ({
 }: NavbarProps) => {
   const isLoadingUser = useSelector(selectUserLoading);
   const localId = useSelector(secectGetLocalId);
-  console.log("isLoadingUser: ", isLoadingUser);
-  console.log("localId: ", localId);
   const handleClick = (): void => {
     onClickHamburg && onClickHamburg();
   };
