@@ -79,7 +79,7 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
 
         for (const pokemon of request.data) {
           await fetch(
-            `https://pokemon-card-4d341-default-rtdb.firebaseio.com/${response.localId}/pokemons.json?aith=${response.idToken}`,
+            `https://pokemon-card-4d341-default-rtdb.firebaseio.com/${response.localId}/pokemons.json?auth=${response.idToken}`,
             {
               method: "POST",
               body: JSON.stringify(pokemon),

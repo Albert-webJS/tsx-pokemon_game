@@ -4,7 +4,7 @@ import { BoardPage } from "./routes/BoardPage/BoardPage";
 import { FinishPage } from "./routes/FinishPage/FinishPage";
 import { PokemonContext } from "../../context/pokemonContext";
 import { useGamePage } from "../../hooks/useGamePage";
-import { FullScren } from "../../components";
+import { FullScren } from "../../hoc";
 
 export const GamePage = () => {
   const { pokemons, selectedPokemons, handleSelectedPokemons } = useGamePage();

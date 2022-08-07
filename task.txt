@@ -3,5 +3,8 @@
 3. Выполнить отрисовку компонентв Result в useEffect !
 
 
-4. Выполнить env.local сборку ключей на пеменнных 
+
 5. Перенести логику регистраации пользователя в класс 
+6. PrivateRoute 
+
+7. https://refactoring.guru/ru/replace-nested-conditional-with-guard-clauses

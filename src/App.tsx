@@ -1,5 +1,6 @@
 import { useLocation, Routes, Route } from "react-router-dom";
-import { MenuHeader, Footer, FullScren, PrivateRoute } from "./components";
+import { MenuHeader, Footer } from "./components";
+import { FullScren, PrivateWrapper } from "./hoc"; 
 import { useDispatch } from "react-redux";
 import { HomePage, GamePage, AboutPage, ContactPage, NotFound } from "./routes";
 import cn from "classnames";
@@ -11,7 +12,6 @@ import { NotificationContainer } from "react-notifications";
 import "../node_modules/react-notifications/lib/notifications.css";
 import { useEffect } from "react";
 import { getUserAsync } from "./store/user/user";
-
 
 export const firebaseInstance = Firebase.getInstance();
 
@@ -35,8 +35,10 @@ const App = () => {
       >
         <Routes>
           <Route path="/" element={<FullScren component={<HomePage />} />} />
-          <Route path="game/*" element={<GamePage />} />
-          <Route path="about" element={<AboutPage />} />
+          <Route element={<PrivateWrapper/>}>
+            <Route path="game/*" element={<GamePage />}/>
+            <Route path="about" element={<AboutPage />}/>
+          </Route>
           <Route path="contact" element={<ContactPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

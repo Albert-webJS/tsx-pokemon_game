@@ -53,8 +53,8 @@ export const getUserAsync = async (dispatch: Dispatch<AnyAction>): Promise<void>
         const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`, requestOptions);
         const request = await response.json();
         console.log("request: ", request);
-        // eslint-disable-next-line no-prototype-builtins
-        if (request.hasOwnProperty("error")) {
+
+        if ("error" in request) {
             localStorage.removeItem("IdToken");
             dispatch(removeUser());
         } else {
