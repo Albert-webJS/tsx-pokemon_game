@@ -1,11 +1,13 @@
 import { IUserError } from "./IUserError";
 
-export interface IUserSingUP {
+export interface IUserInfo {
+    displayName: string;
     email: string;
     expiresIn: string;
     idToken: string;
     kind: string;
     localId: string;
     refreshToken: string;
-    error?: IUserError;
+    registered: boolean;
+    error: IUserError;
 }

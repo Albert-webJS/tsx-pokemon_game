@@ -7,15 +7,14 @@ import { Modal } from "../Modal/Modal";
 import { TypeUserInfo } from "../LoginForm/LoginForm.props";
 import { NotificationManager } from "react-notifications";
 import firebaseconfig from "@assets/firebaseconfig.json";
-import { IUserSingUP } from "../../interfaces/IUserSingUp";
-import { IUserLogin } from "../../interfaces/IUserLogin";
+import { IUserInfo } from "../../interfaces/IUserInfo";
 
 const { apiKey } = firebaseconfig;
 
 const signup = async (
   key: string,
   options: RequestInit
-): Promise<IUserSingUP> => {
+): Promise<IUserInfo> => {
   const response = await fetch(
     `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`,
     options
@@ -23,10 +22,7 @@ const signup = async (
   const request = await response.json();
   return request;
 };
-const login = async (
-  key: string,
-  options: RequestInit
-): Promise<IUserLogin> => {
+const login = async (key: string, options: RequestInit): Promise<IUserInfo> => {
   const response = await fetch(
     `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`,
     options
@@ -38,7 +34,7 @@ const loginSignUpUser = async ({
   type,
   email,
   password,
-}: TypeUserInfo): Promise<IUserSingUP | IUserLogin | string> => {
+}: TypeUserInfo): Promise<IUserInfo> => {
   const requestOptions = {
     method: "POST",
     body: JSON.stringify({
@@ -53,7 +49,7 @@ const loginSignUpUser = async ({
     case "login":
       return await login(apiKey, requestOptions);
     default:
-      return "I can't login user";
+      return await signup(apiKey, requestOptions);
   }
 };
 
@@ -72,11 +68,10 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
     const response = await loginSignUpUser(props);
     console.log("response: ", response);
 
-    // eslint-disable-next-line no-prototype-builtins
-    if (response.hasOwnProperty("error")) {
+    if ("error" in response) {
       NotificationManager.error(response.error.message, "Wrong!");
     } else {
-      if (props.type === "signup" && typeof response !== "string") {
+      if (props.type === "signup") {
         const getStartingColectionCard = await fetch(
           "https://reactmarathon-api.herokuapp.com/api/pokemons/starter"
         );
@@ -92,11 +87,9 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
           );
         }
       }
-      if (typeof response !== "string") {
-        localStorage.setItem("idToken", response.idToken);
-        NotificationManager.success("Success message");
-        handleClickLogin();
-      }
+      localStorage.setItem("idToken", response.idToken);
+      NotificationManager.success("Success message");
+      handleClickLogin();
     }
   };
   return (

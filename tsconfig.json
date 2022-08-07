@@ -23,7 +23,7 @@
   "include": [
     "src",
     "./declaration.d.ts"
-  ],
+, "firebase.ts"  ],
   "paths": {
     "@/assets": ["src/assets/*"],
     "@/interfaces": ["src/interfaces/*"]

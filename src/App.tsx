@@ -1,5 +1,5 @@
 import { useLocation, Routes, Route } from "react-router-dom";
-import { MenuHeader, Footer, FullScren } from "./components";
+import { MenuHeader, Footer, FullScren, PrivateRoute } from "./components";
 import { useDispatch } from "react-redux";
 import { HomePage, GamePage, AboutPage, ContactPage, NotFound } from "./routes";
 import cn from "classnames";

@@ -1,15 +1,16 @@
 import { Route, Navigate } from "react-router-dom";
+import { PrivateRouteProps } from "./PrivateRoute.props";
 
 export const PrivateRoute = ({
-  component: Component,
+  component,
   ...rest
-}: any): JSX.Element => {
+}: PrivateRouteProps): JSX.Element => {
   return (
     <Route
       {...rest}
       element={
         localStorage.getItem("idToken") ? (
-          <Component />
+          component
         ) : (
           <Navigate replace to="/" />
         )
