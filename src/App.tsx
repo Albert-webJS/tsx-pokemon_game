@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { HomePage, GamePage, AboutPage, ContactPage, NotFound } from "./routes";
 import cn from "classnames";
 import clasess from "./App.module.css";
-import { FirebaseContext } from "./context/firebaseContext";
 import Firebase from "./service/firebase";
 import { NotificationContainer } from "react-notifications";
 
@@ -26,7 +25,7 @@ const App = () => {
     getUserAsync(dispatch);
   }, [dispatch]);
   return (
-    <FirebaseContext.Provider value={firebaseInstance}>
+    <>
       <MenuHeader bgActive={!isPadding} />
       <div
         className={cn(clasess.wrap, {
@@ -44,8 +43,7 @@ const App = () => {
         </Routes>
       </div>
       <Footer bgActive={!bgActive} />
-      <NotificationContainer />
-    </FirebaseContext.Provider>
+      <NotificationContainer /></>
   );
 };
 

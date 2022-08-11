@@ -9,18 +9,25 @@ export const LoginForm = ({
 }: LoginFormProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isLogin, setLogin] = useState<boolean>(true);
+  const [onLogin, setLogin] = useState<boolean>(true);
+  const [onRegister, setRegister] = useState<boolean>(false);
 
   useEffect(() => {
     setEmail("");
     setPassword("");
   }, [isResetFiled]);
 
+  const handleChangeAuth = (): void => {
+    setLogin((prevState) => !prevState);
+    setRegister((prevState) => !prevState);
+  };
+
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     onSubmit &&
       onSubmit({
-        type: isLogin ? "login" : "signup",
+        onLogin,
+        onRegister,
         email,
         password,
       });
@@ -43,10 +50,10 @@ export const LoginForm = ({
       />
       <div className={classes.flex}>
         <button className={classes.button}>
-          {isLogin ? "Login" : "Signup"}
+          {onLogin ? "Login" : "Signup"}
         </button>
-        <div className={classes.link} onClick={() => setLogin(!isLogin)}>
-          {isLogin ? "Register" : "Login"}
+        <div className={classes.link} onClick={handleChangeAuth}>
+          {onRegister ? "Login" : "Register"}
         </div>
       </div>
     </form>

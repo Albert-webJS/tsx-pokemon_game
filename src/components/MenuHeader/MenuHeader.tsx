@@ -6,52 +6,8 @@ import { Navbar } from "./Navbar/Navbar";
 import { Modal } from "../Modal/Modal";
 import { TypeUserInfo } from "../LoginForm/LoginForm.props";
 import { NotificationManager } from "react-notifications";
-import firebaseconfig from "@assets/firebaseconfig.json";
-import { IUserInfo } from "../../interfaces/IUserInfo";
+import API from "../../dal/api/index";
 
-const { apiKey } = firebaseconfig;
-
-const signup = async (
-  key: string,
-  options: RequestInit
-): Promise<IUserInfo> => {
-  const response = await fetch(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`,
-    options
-  );
-  const request = await response.json();
-  return request;
-};
-const login = async (key: string, options: RequestInit): Promise<IUserInfo> => {
-  const response = await fetch(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`,
-    options
-  );
-  const request = await response.json();
-  return request;
-};
-const loginSignUpUser = async ({
-  type,
-  email,
-  password,
-}: TypeUserInfo): Promise<IUserInfo> => {
-  const requestOptions = {
-    method: "POST",
-    body: JSON.stringify({
-      email,
-      password,
-      returnSecureToken: true,
-    }),
-  };
-  switch (type) {
-    case "signup":
-      return await signup(apiKey, requestOptions);
-    case "login":
-      return await login(apiKey, requestOptions);
-    default:
-      return await signup(apiKey, requestOptions);
-  }
-};
 
 export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -64,34 +20,36 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
     setOpenModal((prevState) => !prevState);
   };
 
-  const handleLoginFormInfo = async (props: TypeUserInfo): Promise<void> => {
-    const response = await loginSignUpUser(props);
-    console.log("response: ", response);
+  const handleLoginFormInfo = async ({
+    onLogin,
+    onRegister,
+    ...props
+  }: TypeUserInfo): Promise<void> => {
+    if (onRegister) {
+      const response = await API.authentication.singup(props);
+      localStorage.setItem("idToken", response.data.idToken);
+      const { data } = await API.pokemon.get();
+      console.log("data", data);
 
-    if ("error" in response) {
-      NotificationManager.error(response.error.message, "Wrong!");
-    } else {
-      if (props.type === "signup") {
-        const getStartingColectionCard = await fetch(
-          "https://reactmarathon-api.herokuapp.com/api/pokemons/starter"
-        );
-        const request = await getStartingColectionCard.json();
-
-        for (const pokemon of request.data) {
-          await fetch(
-            `https://pokemon-card-4d341-default-rtdb.firebaseio.com/${response.localId}/pokemons.json?auth=${response.idToken}`,
-            {
-              method: "POST",
-              body: JSON.stringify(pokemon),
-            }
-          );
-        }
-      }
-      localStorage.setItem("idToken", response.idToken);
+      API.pokemon.create(data, response);
       NotificationManager.success("Success message");
       handleClickLogin();
     }
+
+    if (onLogin) {
+      const { data } = await API.authentication.login(props);
+      console.log("response: ", data);
+      localStorage.setItem("idToken", data.idToken);
+      NotificationManager.success("Success message");
+      handleClickLogin();
+    }
+
+    // console.log("error: ", error)
+    // if ("error" in response) {
+    //   NotificationManager.error(error, response.error.message);
+    // }
   };
+
   return (
     <>
       <Menu isOpen={isOpen} onClickHamburg={handleClicHamburg} />
