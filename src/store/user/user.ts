@@ -41,7 +41,8 @@ const { apiKey } = firebaseconfig;
 
 
 export const getUserAsync = async (dispatch: Dispatch<AnyAction>): Promise<void> => {
-    const idToken = localStorage.getItem("IdToken");
+    const idToken = localStorage.getItem("idToken");
+    console.log("idToken: ", idToken);
     if (idToken) {
         dispatch(fetchUser());
         const requestOptions = {
@@ -52,7 +53,7 @@ export const getUserAsync = async (dispatch: Dispatch<AnyAction>): Promise<void>
         };
         const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`, requestOptions);
         const request = await response.json();
-        console.log("request: ", request);
+        console.log("request user: ", request);
 
         if ("error" in request) {
             localStorage.removeItem("IdToken");

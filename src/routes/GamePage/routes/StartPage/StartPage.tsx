@@ -4,10 +4,16 @@ import { GameCard } from "../../../../components";
 import clasess from "./StartPage.module.css";
 import { IPokemon } from "../../../../interfaces/IPokemon";
 import { PokemonContext } from "../../../../context/pokemonContext";
+import { useSelector } from "react-redux";
+import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
+
 
 export const StartPage = (): JSX.Element => {
   const navigate = useNavigate();
   const pokemonContext = useContext(PokemonContext);
+  const pokemonsState = useSelector(selectPokemonsData);
+
+  console.log("pokemon state: ", pokemonsState);
 
   const handleChangePage = (): void => {
     navigate("board");
@@ -34,7 +40,7 @@ export const StartPage = (): JSX.Element => {
         Start Game
       </button>
       <div className={clasess.grid}>
-        {Object.entries(pokemonContext?.pokemons ?? {}).map(
+        {Object.entries(pokemonsState ?? {}).map(
           ([key, pokemon]: [string, IPokemon]) => (
             <GameCard
               key={key}
