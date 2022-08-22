@@ -2,57 +2,51 @@ import { Routes, Route } from "react-router-dom";
 import { StartPage } from "./routes/StartPage/StartPage";
 import { BoardPage } from "./routes/BoardPage/BoardPage";
 import { FinishPage } from "./routes/FinishPage/FinishPage";
-import { PokemonContext } from "../../context/pokemonContext";
 import { FullScren } from "../../hoc";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { PokemonsType } from "../../service/IFirebase";
 import {
-  selectPokemonsData,
   getPokemonsAsync,
 } from "../../store/pokemons/pokemons";
 import { firebaseInstance } from "../../App";
+import { IPokemon } from "../../interfaces/IPokemon";
 
 export const GamePage = () => {
   const [pokemons, setPokemons] = useState<PokemonsType>({});
-  console.log("pokemons: ", pokemons);
   const [selectedPokemons, setSelectedPokemons] = useState<PokemonsType>({});
-  const pokemonsRedux = useSelector(selectPokemonsData);
-  console.log("pokemon redux", pokemonsRedux);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     firebaseInstance.initPokemonSoket((data) => setPokemons(data));
     getPokemonsAsync(dispatch);
   }, [dispatch]);
 
-  const handleSelectedPokemons = (pokemons: PokemonsType): void => {
-    setPokemons(() => {
+  const handleSelectedPokemons = (pokemon: IPokemon, key: string): void => {
+    setSelectedPokemons((prevState) => {
       return {
-        ...pokemons,
+        ...prevState,
+        [key]: {
+          ...pokemon,
+          selected: true,
+        },
       };
     });
-    setSelectedPokemons(
-      Object.entries(pokemons).reduce((acc, [key, value]) => {
-        if (value.selected) acc[key] = value;
-        return acc;
-      }, {} as PokemonsType)
-    );
   };
 
   return (
-    <PokemonContext.Provider
-      value={{
-        pokemons: pokemons,
-        onSelectedPokemons: handleSelectedPokemons,
-        selectedPokemons: selectedPokemons,
-      }}
-    >
-      <Routes>
-        <Route path="/" element={<FullScren component={<StartPage />} />} />
-        <Route path="board" element={<BoardPage />} />
-        <Route path="finish" element={<FinishPage />} />
-      </Routes>
-    </PokemonContext.Provider>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <FullScren
+            component={<StartPage onSelected={handleSelectedPokemons} selectedState={selectedPokemons} />}
+          />
+        }
+      />
+      <Route path="board" element={<BoardPage />} />
+      <Route path="finish" element={<FinishPage />} />
+    </Routes>
   );
 };

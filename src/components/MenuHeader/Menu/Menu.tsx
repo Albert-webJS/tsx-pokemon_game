@@ -3,10 +3,16 @@ import { MenuProps } from "./Menu.props";
 import { Link } from "react-router-dom";
 import clasess from "./Menu.module.css";
 import cn from "classnames";
+import { useContext } from "react";
+import { PageContext } from "../../../context";
 
 export const Menu = ({ isOpen, onClickHamburg }: MenuProps) => {
+  const { onChangePage } = useContext(PageContext);
   const handleClick = (): void => {
     onClickHamburg && onClickHamburg();
+  };
+  const handlePathPage = (path: string) => {
+    onChangePage && onChangePage(path);
   };
   return (
     <div
@@ -20,7 +26,13 @@ export const Menu = ({ isOpen, onClickHamburg }: MenuProps) => {
         <ul>
           {MENU.map(({ id, title, path }: MenuItem) => (
             <li key={id}>
-              <Link to={path} onClick={handleClick}>
+              <Link
+                to={path}
+                onClick={() => {
+                  handleClick();
+                  handlePathPage(path);
+                }}
+              >
                 {title}
               </Link>
             </li>

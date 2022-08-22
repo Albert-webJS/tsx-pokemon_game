@@ -1,12 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../../../../components/GameCard/GameCard";
 import { Result } from "../../../../components/Result/Result";
 import { PlayerBoard } from "./component/PlayerBoard/PlayerBoard";
-import { PokemonContext } from "../../../../context/pokemonContext";
 import { IBoard } from "../../../../interfaces/IBoard";
 import { IPokemon } from "../../../../interfaces/IPokemon";
 import clasess from "./BoardPage.module.css";
+import { useSelector } from "react-redux";
+import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
 
 const counterWin = (
   board: IBoard[],
@@ -28,12 +29,12 @@ const counterWin = (
 };
 
 export const BoardPage = (): JSX.Element => {
-  const pokemonContext = useContext(PokemonContext);
+  const pokemonsState = useSelector(selectPokemonsData);
   const [steps, setSteps] = useState<number>(0);
   const [board, setBoard] = useState<IBoard[]>([]);
   const [choiceCard, setChoiceCard] = useState<IPokemon | null>(null);
   const [playerOne, setPlayerOne] = useState<IPokemon[]>(() => {
-    return Object.values(pokemonContext?.pokemons ?? {}).map(
+    return Object.values(pokemonsState ?? {}).map(
       (pokemon: IPokemon) => ({
         ...pokemon,
         possession: "blue",
@@ -43,7 +44,7 @@ export const BoardPage = (): JSX.Element => {
   const [playerTwo, setPlayerTwo] = useState<IPokemon[]>([]);
 
   const navigate = useNavigate();
-  const convertData = Object.keys(pokemonContext?.selectedPokemons ?? {});
+  const convertData = Object.keys(pokemonsState ?? {});
 
   const getDataBoard = async () => {
     const boardResponse = await fetch(

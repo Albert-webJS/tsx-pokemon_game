@@ -8,7 +8,6 @@ import { TypeUserInfo } from "../LoginForm/LoginForm.props";
 import { NotificationManager } from "react-notifications";
 import API from "../../dal/api/index";
 
-
 export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);

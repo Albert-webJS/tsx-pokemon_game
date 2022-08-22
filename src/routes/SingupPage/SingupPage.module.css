@@ -1,0 +1,28 @@
+.container {
+	width: 100%;
+	height: auto;
+}
+
+.heading {
+	font-size: 30px;
+	font-weight: 700;
+	text-align: center;
+	background: rgb(63 94 251);
+	background:
+		radial-gradient(
+			circle,
+			rgb(63 94 251 / 100%) 0%,
+			rgb(252 70 107 / 100%) 100%
+		);
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.goLogo {
+	display: inline-block;
+	width: 60px;
+}
+
+.boxForm {
+	display: flex;
+}

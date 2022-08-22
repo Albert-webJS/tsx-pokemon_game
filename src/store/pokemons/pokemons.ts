@@ -26,7 +26,7 @@ export const slice = createSlice({
             isLoading: false,
             data: {},
             error: action.payload,
-        }),
+        })
     }
 });
 

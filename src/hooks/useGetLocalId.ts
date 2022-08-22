@@ -5,4 +5,4 @@ import { secectGetLocalId } from "../store/user/user";
 export const UseGetLocalId = () => {
     const localId = useSelector(secectGetLocalId);
     return localId;
-}
+};

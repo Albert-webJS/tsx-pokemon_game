@@ -14,16 +14,16 @@ export const MENU: MenuItem[] = [
     {
         id: getUniqId(),
         title: "GAME",
-        path: "/game",
+        path: "game",
     },
     {
         id: getUniqId(),
         title: "ABOUT",
-        path: "/about",
+        path: "about",
     },
     {
         id: getUniqId(),
         title: "CONTACT",
-        path: "/contact",
+        path: "contact",
     },
 ];

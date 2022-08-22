@@ -1,10 +1,1 @@
-1. Расматреть вариант с функцией или компонентом оберткой с классом isPadding
-2. Перевести контекс на редакс
-3. Выполнить отрисовку компонентв Result в useEffect !
-
-
-
-5. Перенести логику регистраации пользователя в класс 
-6. PrivateRoute 
-
-7. https://refactoring.guru/ru/replace-nested-conditional-with-guard-clauses
+1. Найти решение передать props pages

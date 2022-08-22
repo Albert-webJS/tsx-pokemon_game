@@ -8,5 +8,5 @@ export type TypeUserInfo = {
 
 export interface LoginFormProps {
     onSubmit: (props: TypeUserInfo) => void;
-    isResetFiled: boolean;
+    isResetFiled?: boolean;
 }

@@ -1,41 +1,42 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../../../../components";
 import clasess from "./StartPage.module.css";
 import { IPokemon } from "../../../../interfaces/IPokemon";
-import { PokemonContext } from "../../../../context/pokemonContext";
 import { useSelector } from "react-redux";
 import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
+import { StartPageProps } from "./StartPageProps";
 
-
-export const StartPage = (): JSX.Element => {
+export const StartPage = ({
+  onSelected,
+  selectedState,
+}: StartPageProps): JSX.Element => {
   const navigate = useNavigate();
-  const pokemonContext = useContext(PokemonContext);
   const pokemonsState = useSelector(selectPokemonsData);
 
-  console.log("pokemon state: ", pokemonsState);
+  console.log("selected state: ", selectedState);
 
   const handleChangePage = (): void => {
     navigate("board");
   };
 
   const handleСhangeSelected = (key: string): void => {
-    pokemonContext?.onSelectedPokemons({
-      ...pokemonContext?.pokemons,
-      [key]: {
-        ...pokemonContext?.pokemons[key],
-        selected: !pokemonContext?.pokemons[key].selected,
-      },
-    });
+    const pokemons = { ...pokemonsState[key] };
+    onSelected && onSelected(pokemons, key);
+    // setSelectedPokemons((pokemon) => ({
+    //   ...pokemon,
+    //   [key]: {
+    //     ...pokemon[key],
+    //     selected: !pokemon[key].selected
+    //   },
+    // }));
   };
+
   return (
     <div className={clasess.wrapper}>
       <button
         className={clasess.button}
         onClick={handleChangePage}
-        disabled={
-          Object.keys(pokemonContext?.selectedPokemons ?? {}).length < 5
-        }
+        disabled={Object.keys(selectedState ?? {}).length < 5}
       >
         Start Game
       </button>
@@ -49,7 +50,7 @@ export const StartPage = (): JSX.Element => {
               isActive={true}
               isSelected={pokemon.selected}
               onClickCard={() => {
-                if (Object.keys(pokemonContext?.selectedPokemons ?? {}).length <= 5) {
+                if (Object.keys(selectedState ?? {}).length <= 5) {
                   handleСhangeSelected(key);
                 }
               }}
