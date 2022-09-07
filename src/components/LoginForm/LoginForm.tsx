@@ -50,10 +50,10 @@ export const LoginForm = ({
       />
       <div className={classes.flex}>
         <button className={classes.button}>
-          {onLogin ? "Login" : "Signup"}
+          {onRegister ? "Login" : "Register"}
         </button>
         <div className={classes.link} onClick={handleChangeAuth}>
-          {onRegister ? "Login" : "Register"}
+          {onLogin ? "Login" : "Signup"}
         </div>
       </div>
     </form>

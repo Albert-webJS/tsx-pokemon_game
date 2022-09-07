@@ -1,22 +1,21 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { StartPage } from "./routes/StartPage/StartPage";
-import { BoardPage } from "./routes/BoardPage/BoardPage";
-import { FinishPage } from "./routes/FinishPage/FinishPage";
 import { FullScren } from "../../hoc";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { PokemonsType } from "../../service/IFirebase";
-import {
-  getPokemonsAsync,
-} from "../../store/pokemons/pokemons";
+import { getPokemonsAsync } from "../../store/pokemons/pokemons";
 import { firebaseInstance } from "../../App";
 import { IPokemon } from "../../interfaces/IPokemon";
+
+const StartPage = lazy(() => import("./routes/StartPage/StartPage"));
+const BoardPage = lazy(() => import("./routes/BoardPage/BoardPage"));
+const FinishPage = lazy(() => import("./routes/FinishPage/FinishPage"));
 
 export const GamePage = () => {
   const [pokemons, setPokemons] = useState<PokemonsType>({});
   const [selectedPokemons, setSelectedPokemons] = useState<PokemonsType>({});
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     firebaseInstance.initPokemonSoket((data) => setPokemons(data));
@@ -36,17 +35,24 @@ export const GamePage = () => {
   };
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <FullScren
-            component={<StartPage onSelected={handleSelectedPokemons} selectedState={selectedPokemons} />}
-          />
-        }
-      />
-      <Route path="board" element={<BoardPage />} />
-      <Route path="finish" element={<FinishPage />} />
-    </Routes>
+    <Suspense>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <FullScren
+              component={
+                <StartPage
+                  onSelected={handleSelectedPokemons}
+                  selectedState={selectedPokemons}
+                />
+              }
+            />
+          }
+        />
+        <Route path="board" element={<BoardPage />} />
+        <Route path="finish" element={<FinishPage />} />
+      </Routes>
+    </Suspense>
   );
 };

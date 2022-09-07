@@ -28,18 +28,16 @@ const counterWin = (
   return [playerCounter1, playerCounter2];
 };
 
-export const BoardPage = (): JSX.Element => {
+const BoardPage = (): JSX.Element => {
   const pokemonsState = useSelector(selectPokemonsData);
   const [steps, setSteps] = useState<number>(0);
   const [board, setBoard] = useState<IBoard[]>([]);
   const [choiceCard, setChoiceCard] = useState<IPokemon | null>(null);
   const [playerOne, setPlayerOne] = useState<IPokemon[]>(() => {
-    return Object.values(pokemonsState ?? {}).map(
-      (pokemon: IPokemon) => ({
-        ...pokemon,
-        possession: "blue",
-      })
-    );
+    return Object.values(pokemonsState ?? {}).map((pokemon: IPokemon) => ({
+      ...pokemon,
+      possession: "blue",
+    }));
   });
   const [playerTwo, setPlayerTwo] = useState<IPokemon[]>([]);
 
@@ -79,7 +77,7 @@ export const BoardPage = (): JSX.Element => {
 
       if (count1 > count2) {
         console.log("win...");
-        <Result type="win"/>;
+        <Result type="win" />;
       } else if (count1 < count2) {
         console.log("lose...");
         <Result type="lose" />;
@@ -168,3 +166,5 @@ export const BoardPage = (): JSX.Element => {
     </div>
   );
 };
+
+export default BoardPage;

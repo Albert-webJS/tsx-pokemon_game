@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
 import { StartPageProps } from "./StartPageProps";
 
-export const StartPage = ({
+const StartPage = ({
   onSelected,
   selectedState,
 }: StartPageProps): JSX.Element => {
@@ -61,3 +61,5 @@ export const StartPage = ({
     </div>
   );
 };
+
+export default StartPage;
