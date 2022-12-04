@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { IFirebaseRequest } from "../../interfaces/IFirebaseRequest";
+import { IFirebaseRequest } from "../../types/";
 import { PokemonsType } from "../../service/IFirebase";
 
 export default {

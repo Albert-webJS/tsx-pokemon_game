@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import 'firebase/database';
-import { IPokemon } from "../interfaces/IPokemon";
+import { IPokemon } from "../types";
 import firebaseConfig from '../assets/firebaseconfig.json';
 import { IFirebase } from './IFirebase';
 import { PokemonsType } from './IFirebase';

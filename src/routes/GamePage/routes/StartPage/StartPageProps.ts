@@ -1,4 +1,4 @@
-import { IPokemon } from "../../../../interfaces/IPokemon";
+import { IPokemon } from "../../../../types";
 import { PokemonsType } from "../../../../service/IFirebase";
 
 export interface StartPageProps {

@@ -1,5 +1,5 @@
 import { AnyAction, createSlice, Dispatch } from "@reduxjs/toolkit";
-import { IPokemon } from "../../interfaces/IPokemon";
+import { IPokemon } from "../../types";
 import { firebaseInstance } from "../../App";
 import { RootState } from "../type";
 

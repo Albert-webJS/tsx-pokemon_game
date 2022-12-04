@@ -1,4 +1,4 @@
-import { IPokemon } from "../interfaces/IPokemon";
+import { IPokemon } from "../types";
 
 export type PokemonsType = Record<string, IPokemon>;
 

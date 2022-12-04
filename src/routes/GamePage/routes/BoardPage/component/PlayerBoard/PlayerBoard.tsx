@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getUniqId } from "../../../../../../utils";
 import { PlayerBoardProps } from "./PlayerBoard.props";
 import { GameCard } from "../../../../../../components";
-import { IPokemon } from "../../../../../../interfaces/IPokemon";
+import { IPokemon } from "../../../../../../types";
 
 import cn from "classnames";
 import clasess from "./PlayerBoard.module.css";

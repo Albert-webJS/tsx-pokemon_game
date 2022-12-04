@@ -1,4 +1,4 @@
-import { IPokemon } from "./IPokemon";
+import { IPokemon } from "./Pokemon";
 
 export interface IBoard {
     position: number;

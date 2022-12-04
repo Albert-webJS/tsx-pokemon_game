@@ -1,4 +1,4 @@
-import { IUserError } from "./IUserError";
+import { IUserError } from "./UserError";
 
 export interface IUserInfo {
     displayName: string;

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { PokemonsType } from "../../service/IFirebase";
 import { getPokemonsAsync } from "../../store/pokemons/pokemons";
 import { firebaseInstance } from "../../App";
-import { IPokemon } from "../../interfaces/IPokemon";
+import { IPokemon } from "../../types";
 
 const StartPage = lazy(() => import("./routes/StartPage/StartPage"));
 const BoardPage = lazy(() => import("./routes/BoardPage/BoardPage"));

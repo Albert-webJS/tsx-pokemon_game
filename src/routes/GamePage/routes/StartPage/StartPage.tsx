@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../../../../components";
 import clasess from "./StartPage.module.css";
-import { IPokemon } from "../../../../interfaces/IPokemon";
+import { IPokemon } from "../../../../types";
 import { useSelector } from "react-redux";
 import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
 import { StartPageProps } from "./StartPageProps";

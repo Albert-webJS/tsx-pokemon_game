@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { TypeUserInfo } from "../../components/LoginForm/LoginForm.props";
-import { IFirebaseRequest } from "../../interfaces/IFirebaseRequest";
+import { IFirebaseRequest } from "../../types/";
 import { instanse } from "../axios/axios";
 
 export default {

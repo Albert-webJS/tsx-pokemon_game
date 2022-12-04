@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { IBoard } from "../../interfaces/IBoard";
-import { IPokemon } from "../../interfaces/IPokemon";
+import { IBoard } from "../../types/";
+import { IPokemon } from "../../types/Pokemon";
 
 
 export interface GameCardProps {

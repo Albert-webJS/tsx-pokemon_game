@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../../../../components/GameCard/GameCard";
 import { Result } from "../../../../components/Result/Result";
 import { PlayerBoard } from "./component/PlayerBoard/PlayerBoard";
-import { IBoard } from "../../../../interfaces/IBoard";
-import { IPokemon } from "../../../../interfaces/IPokemon";
+import { IBoard } from "../../../../types/";
+import { IPokemon } from "../../../../types";
 import clasess from "./BoardPage.module.css";
 import { useSelector } from "react-redux";
 import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
