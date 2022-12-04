@@ -1,68 +1,57 @@
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../../../../components";
 import clasess from "./StartPage.module.css";
 import { IPokemon } from "../../../../types";
-import { useSelector } from "react-redux";
 import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
-import { PokemonsType } from "../../../../service/IFirebase";
+import { useSelector } from "react-redux";
 
-interface StartPageProps {
-    onSelected: (pokemon: IPokemon, key: string ) => void;
-    selectedState: PokemonsType;
-}
+const MAX_POKEMONS_SELECT = 5;
 
-const StartPage = ({
-  onSelected,
-  selectedState,
-}: StartPageProps): JSX.Element => {
+const StartPage = (): JSX.Element => {
+  const pokemons = useSelector(selectPokemonsData);
+  const [selectedPokemons, setSelectedPokemons] = useState<IPokemon[]>([]);
   const navigate = useNavigate();
-  const pokemonsState = useSelector(selectPokemonsData);
-
-  console.log("selected state: ", selectedState);
 
   const handleChangePage = (): void => {
     navigate("board");
   };
 
-  const handleСhangeSelected = (key: string): void => {
-    const pokemons = { ...pokemonsState[key] };
-    onSelected && onSelected(pokemons, key);
-    // setSelectedPokemons((pokemon) => ({
-    //   ...pokemon,
-    //   [key]: {
-    //     ...pokemon[key],
-    //     selected: !pokemon[key].selected
-    //   },
-    // }));
+  const handleSelectPokemons = (key: string): void => {
+    if (selectedPokemons.length > MAX_POKEMONS_SELECT) {
+      return;
+    }
+    const pokemon = pokemons[key];
+    setSelectedPokemons((pokemons) => pokemons.concat(pokemon));
   };
+
+  const gameCards = useMemo(
+    () =>
+      Object.entries(pokemons).map(([key, pokemon]) => (
+        <GameCard
+          key={key}
+          pokemon={pokemon}
+          className={clasess.card}
+          isActive={true}
+          isSelected={pokemon.selected}
+          onClickCard={() => {
+            handleSelectPokemons(key);
+          }}
+        />
+      )),
+    [pokemons]
+  );
 
   return (
     <div className={clasess.wrapper}>
       <button
         className={clasess.button}
         onClick={handleChangePage}
-        disabled={Object.keys(selectedState ?? {}).length < 5}
+        disabled={selectedPokemons.length < MAX_POKEMONS_SELECT}
       >
         Start Game
       </button>
-      <div className={clasess.grid}>
-        {Object.entries(pokemonsState ?? {}).map(
-          ([key, pokemon]: [string, IPokemon]) => (
-            <GameCard
-              key={key}
-              pokemon={pokemon}
-              className={clasess.card}
-              isActive={true}
-              isSelected={pokemon.selected}
-              onClickCard={() => {
-                if (Object.keys(selectedState ?? {}).length <= 5) {
-                  handleСhangeSelected(key);
-                }
-              }}
-            />
-          )
-        )}
-      </div>
+      <div className={clasess.grid}>{gameCards}</div>
     </div>
   );
 };
