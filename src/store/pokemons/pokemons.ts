@@ -1,32 +1,35 @@
 import { AnyAction, createSlice, Dispatch } from "@reduxjs/toolkit";
 import { IPokemon } from "../../interfaces/IPokemon";
-import firebaseConfig from '@assets/firebaseconfig.json';
-import { UseGetLocalId } from "../../hooks/useGetLocalId";
 import { firebaseInstance } from "../../App";
+import { RootState } from "../type";
 
+export interface PokemonsState {
+    data: Record<string, IPokemon>;
+    error: null;
+    isLoading: boolean;
+}
+
+const initialState: PokemonsState = {
+    isLoading: false,
+    data: {},
+    error: null,
+};
 export const slice = createSlice({
     name: "pokemons",
-    initialState: {
-        isLoading: false,
-        data: {},
-        error: null,
-    },
+    initialState,
     reducers: {
-        fetchPokemons: (state) => ({
-            ...state,
-            isLoading: true
-        }),
-        fetchPokemonsResolve: (state, action) => ({
-            ...state,
-            isLoading: false,
-            data: action.payload,
-        }),
-        fetchPokemonsReject: (state, action) => ({
-            ...state,
-            isLoading: false,
-            data: {},
-            error: action.payload,
-        })
+        fetchPokemons: state => {
+            state.isLoading = true;
+        },
+        fetchPokemonsResolve: (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        },
+        fetchPokemonsReject: (state, action) => {
+            state.isLoading = false;
+            state.data = {};
+            state.error = action.payload;
+        },
     }
 });
 
@@ -39,19 +42,18 @@ export const { fetchPokemons, fetchPokemonsResolve, fetchPokemonsReject } = slic
 export const getPokemonsAsync = async (dispatch: Dispatch<AnyAction>) => {
     // const IdToken = localStorage.getItem("idToken");
     // const localId = UseGetLocalId();
-    dispatch(fetchPokemons());
-    const response = await firebaseInstance.getPokemonsOnce();
-    dispatch(fetchPokemonsResolve(response));
+    try {
+        dispatch(fetchPokemons());
+        const response = await firebaseInstance.getPokemonsOnce();
+        dispatch(fetchPokemonsResolve(response));
+    } catch (error) {
+        console.error(error);
+    }
 };
 // fetch(`https://${databaseName}/${localId}/pokemons.json?auth=${IdToken}`);
 
-export interface PokemonsState {
-    data: Record<string, IPokemon>;
-    error: null;
-    isLoading: boolean;
-}
 
-export const selectPokemonsLoading = (state: Record<string, PokemonsState>) => state.pokemons.isLoading;
-export const selectPokemonsData = (state: Record<string, PokemonsState>) => state.pokemons.data;
+export const selectPokemonsLoading = (state: RootState) => state.pokemons.isLoading;
+export const selectPokemonsData = (state: RootState) => state.pokemons.data;
 
 export default slice.reducer;
