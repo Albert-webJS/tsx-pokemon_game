@@ -35,6 +35,7 @@ export const GamePage = () => {
   };
 
   return (
+    // fallback
     <Suspense>
       <Routes>
         <Route

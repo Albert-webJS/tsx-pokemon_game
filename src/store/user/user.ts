@@ -1,49 +1,52 @@
 import { AnyAction, createSlice } from "@reduxjs/toolkit";
 import { Dispatch } from "react";
 import firebaseconfig from "@assets/firebaseconfig.json";
-
-
-export const slice = createSlice({
-    name: "user",
-    initialState: {
-        isLoading: false,
-        data: {},
-    },
-    reducers: {
-        fetchUser: () => ({
-            isLoading: true,
-            data: {},
-        }),
-        updateUser: (state, action) => ({
-            isLoading: false,
-            data: action.payload,
-        }),
-        removeUser: () => ({
-            isLoading: false,
-            data: {},
-        }),
-    }
-});
-
+import { RootState } from "../type";
 
 interface UserState {
     isLoading: boolean;
     data: Record<string, string>
 }
 
+const initialState: UserState = {
+    isLoading: false,
+    data: {},
+};
+
+export const slice = createSlice({
+    name: "user",
+    initialState,
+    reducers: {
+        fetchUser: state => {
+            state.isLoading = true;
+        },
+        updateUser: (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        },
+        removeUser: state => {
+            state.isLoading = false;
+            state.data = {};
+        },
+    }
+});
+
 export const { fetchUser, updateUser, removeUser } = slice.actions;
 
-export const selectUserLoading = (state: Record<string, UserState>) => state.user.isLoading;
-export const selectUser = (state: Record<string, UserState>) => state.user.data;
-export const secectGetLocalId = (state: Record<string, UserState>) => state.user.data?.localId;
+export const selectUserLoading = (state: RootState) => state.user.isLoading;
+export const selectUser = (state: RootState) => state.user.data;
+export const secectGetLocalId = (state: RootState) => state.user.data?.localId;
 
 const { apiKey } = firebaseconfig;
 
 
 export const getUserAsync = async (dispatch: Dispatch<AnyAction>): Promise<void> => {
     const idToken = localStorage.getItem("idToken");
-    console.log("idToken: ", idToken);
-    if (idToken) {
+    if (!idToken) {
+        dispatch(removeUser());
+        return;
+    }
+    try {
         dispatch(fetchUser());
         const requestOptions = {
             method: "POST",
@@ -53,7 +56,6 @@ export const getUserAsync = async (dispatch: Dispatch<AnyAction>): Promise<void>
         };
         const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`, requestOptions);
         const request = await response.json();
-        console.log("request user: ", request);
 
         if ("error" in request) {
             localStorage.removeItem("IdToken");
@@ -61,9 +63,9 @@ export const getUserAsync = async (dispatch: Dispatch<AnyAction>): Promise<void>
         } else {
             dispatch(updateUser(request.users[0]));
         }
-    } else {
-        dispatch(removeUser());
+    } catch (error) {
+        console.error(error);
     }
 };
 
-export default slice.reducer;
+export const userReducer = slice.reducer;

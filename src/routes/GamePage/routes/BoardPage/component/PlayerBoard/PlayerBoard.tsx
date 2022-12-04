@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getUniqId } from "../../../../../../utils/uniqId";
+import { getUniqId } from "../../../../../../utils";
 import { PlayerBoardProps } from "./PlayerBoard.props";
 import { GameCard } from "../../../../../../components";
 import { IPokemon } from "../../../../../../interfaces/IPokemon";

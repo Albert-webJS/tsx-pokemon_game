@@ -1,3 +1,1 @@
-1. fix problem with register and login client.
-2  solve task and create page register.
-3. finish page "Start page"
+1. read info "crypto get random values"

@@ -17,36 +17,36 @@ import Firebase from "./service/firebase";
 import { NotificationContainer } from "react-notifications";
 import "../node_modules/react-notifications/lib/notifications.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getUserAsync } from "./store/user/user";
-import { PageContext } from "./context";
+import { PageProvider } from "./context";
 
 export const firebaseInstance = Firebase.getInstance();
 
-const App = () => {
+export const App = () => {
   const [page, setPage] = useState<string>("");
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const isPadding =
     location.pathname === "/" || location.pathname === "/game/board";
   const bgActive = location.pathname === "/";
-  const dispatch = useDispatch();
-
-  const onChangePage = (value: string) => {
-    setPage(() => value);
-  };
 
   useEffect(() => {
     getUserAsync(dispatch);
   }, [dispatch]);
 
+  const pageProviderValue = useMemo(() => {
+    return {
+      page,
+      onChangePage: setPage,
+    };
+  }, [page]);
+
   return (
-    <PageContext.Provider
-      value={{
-        page,
-        onChangePage,
-      }}
-    >
+    <PageProvider value={pageProviderValue}>
       <MenuHeader bgActive={!isPadding} />
+
       <div
         className={cn(clasess.wrap, {
           [clasess.isPadding]: isPadding,
@@ -63,10 +63,9 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+
       <Footer bgActive={!bgActive} />
       <NotificationContainer />
-    </PageContext.Provider>
+    </PageProvider>
   );
 };
-
-export default App;

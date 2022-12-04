@@ -28,7 +28,6 @@ export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
       const response = await API.authentication.singup(props);
       localStorage.setItem("idToken", response.data.idToken);
       const { data } = await API.pokemon.get();
-      console.log("data", data);
 
       API.pokemon.create(data, response);
       NotificationManager.success("Success message");

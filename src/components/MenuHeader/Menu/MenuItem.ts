@@ -1,4 +1,4 @@
-import { getUniqId } from "../../../utils/uniqId";
+import { getUniqId } from "../../../utils/";
 
 export interface MenuItem {
     id: string;
