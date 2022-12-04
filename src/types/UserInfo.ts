@@ -11,3 +11,11 @@ export interface IUserInfo {
     registered: boolean;
     error?: IUserError;
 }
+
+export type TypeUserInfo = {
+    onLogin?: boolean;
+    onRegister?: boolean;
+    email: string;
+    password: string;
+    returnSecureToken?: true;
+  };

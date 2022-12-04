@@ -4,7 +4,12 @@ import clasess from "./StartPage.module.css";
 import { IPokemon } from "../../../../types";
 import { useSelector } from "react-redux";
 import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
-import { StartPageProps } from "./StartPageProps";
+import { PokemonsType } from "../../../../service/IFirebase";
+
+interface StartPageProps {
+    onSelected: (pokemon: IPokemon, key: string ) => void;
+    selectedState: PokemonsType;
+}
 
 const StartPage = ({
   onSelected,

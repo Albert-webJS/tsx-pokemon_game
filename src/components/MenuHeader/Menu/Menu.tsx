@@ -1,9 +1,13 @@
 import { MenuItem, MENU } from "./MenuItem";
-import { MenuProps } from "./Menu.props";
 import { Link } from "react-router-dom";
 import clasess from "./Menu.module.css";
 import cn from "classnames";
 import { usePageContex } from "../../../context";
+
+interface MenuProps {
+  onClickHamburg: () => void,
+  isOpen: boolean
+}
 
 export const Menu = ({ isOpen, onClickHamburg }: MenuProps) => {
   const { onChangePage } = usePageContex();

@@ -1,6 +1,10 @@
 import { format } from "date-fns";
+
 import clasess from "./Footer.module.css";
-import { FooterProps } from "./Footer.props";
+
+interface FooterProps {
+  bgActive: boolean;
+}
 
 export const Footer = ({ bgActive }: FooterProps): JSX.Element => {
   return (

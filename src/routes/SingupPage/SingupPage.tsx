@@ -1,6 +1,9 @@
 import clasess from "./SingupPage.module.css";
 import go from "../../assets/go-logo.png";
-import { SingupProps } from "./SinguypProps";
+
+interface SingupProps {
+  page: string;
+}
 
 export const SingupPage = ({ page }: SingupProps): JSX.Element => {
   return (

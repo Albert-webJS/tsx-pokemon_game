@@ -1,6 +1,23 @@
-import { GameCardProps } from "./GameCard.props";
+import { ReactNode } from "react";
+import { IBoard } from "../../types/";
+import { IPokemon } from "../../types/Pokemon";
+
 import classes from "./GameCard.module.css";
 import cn from "classnames";
+
+interface GameCardProps {
+    key?: number | string;
+    pokemon: IPokemon;
+    children?: ReactNode;
+    onClickCard?: (id: number) => void;
+    className?: string;
+    isActive?: boolean;
+    minimize?: boolean;
+    isSelected?: boolean;
+    square?: IBoard
+    // position?: number;
+    // card?: Pokemons
+}
 
 export const GameCard = ({
   pokemon: { values, name, id, type, img, possession },

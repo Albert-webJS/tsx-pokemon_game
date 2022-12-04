@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
+import { TypeUserInfo } from "../../types";
 import { Input } from "./Input/Input";
-import { LoginFormProps } from "./LoginForm.props";
 import classes from "./LoginForm.module.css";
+
+interface LoginFormProps {
+  onSubmit: (props: TypeUserInfo) => void;
+  isResetFiled?: boolean;
+}
 
 export const LoginForm = ({
   onSubmit,

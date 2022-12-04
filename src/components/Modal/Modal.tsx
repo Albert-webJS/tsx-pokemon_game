@@ -1,7 +1,13 @@
-import { useEffect, useRef } from "react";
-import { ModalProps } from "./Modal.props";
+import { useEffect, useRef, ReactNode} from "react";
 import cn from "classnames";
 import clasess from "./Modal.module.css";
+
+export interface ModalProps {
+    title: string;
+    children: ReactNode;
+    isOpen: boolean;
+    isClose: (state: boolean) => void;
+}
 
 export const Modal = ({
   isOpen,

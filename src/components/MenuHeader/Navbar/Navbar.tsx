@@ -1,11 +1,19 @@
-import { NavbarProps } from "./Navbar.props";
+import { useSelector } from "react-redux";
+import { secectGetLocalId, selectUserLoading } from "../../../store/user/user";
+
 import clasess from "./Navbar.module.css";
 import cn from "classnames";
+
 import { ReactComponent as LogoSVG } from "@assets/Logo (1).svg";
 import { ReactComponent as LoginAuth } from "@assets/loginAuth.svg";
 import { ReactComponent as UserSVG } from "@assets/userSVG.svg";
-import { useSelector } from "react-redux";
-import { secectGetLocalId, selectUserLoading } from "../../../store/user/user";
+
+interface NavbarProps {
+  bgActive: boolean,
+  isOpen: boolean,
+  onClickHamburg: () => void,
+  onClickLogin: () => void,
+}
 
 export const Navbar = ({
   bgActive,

@@ -1,7 +1,15 @@
+import { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
+
 import clasess from "./style.module.css";
 import cn from "classnames";
-import { LayoutProps } from "./Layout.props";
 
+interface LayoutProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+    id: string;
+    title: string;
+    urlBg?: string;
+    colorBg?: string;
+    children?: ReactNode
+}
 export const Layout = ({
   id,
   title,

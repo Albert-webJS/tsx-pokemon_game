@@ -1,12 +1,15 @@
-import { MenuHeaderProps } from "./MenuHeader.props";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useState } from "react";
 import { Menu } from "./Menu/Menu";
 import { Navbar } from "./Navbar/Navbar";
 import { Modal } from "../Modal/Modal";
-import { TypeUserInfo } from "../LoginForm/LoginForm.props";
+import { TypeUserInfo } from "../../types";
 import { NotificationManager } from "react-notifications";
 import API from "../../dal/api/index";
+
+interface MenuHeaderProps {
+  bgActive: boolean,
+}
 
 export const MenuHeader = ({ bgActive }: MenuHeaderProps): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(false);

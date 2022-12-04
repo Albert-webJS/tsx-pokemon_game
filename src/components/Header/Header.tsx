@@ -1,6 +1,13 @@
-import { HeaderProps } from "./Header.props";
+import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+
 import clasess from "./Header.module.css";
+
+interface HeaderProps {
+  title: string;
+  description: string;
+  children?: ReactNode;
+}
 
 export const Header = ({ title, description }: HeaderProps): JSX.Element => {
   const navigate = useNavigate();
