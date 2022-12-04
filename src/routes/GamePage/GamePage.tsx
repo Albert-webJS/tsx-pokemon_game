@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { FullScren } from "../../hoc";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { PokemonsType } from "../../service/IFirebase";
@@ -41,13 +40,9 @@ export const GamePage = () => {
         <Route
           path="/"
           element={
-            <FullScren
-              component={
-                <StartPage
-                  onSelected={handleSelectedPokemons}
-                  selectedState={selectedPokemons}
-                />
-              }
+            <StartPage
+              onSelected={handleSelectedPokemons}
+              selectedState={selectedPokemons}
             />
           }
         />

@@ -1,6 +1,6 @@
 import { useLocation, Routes, Route } from "react-router-dom";
 import { MenuHeader, Footer } from "./components";
-import { FullScren, PrivateWrapper } from "./hoc";
+import { PrivateWrapper } from "./hoc";
 import { useDispatch } from "react-redux";
 import {
   HomePage,
@@ -53,7 +53,7 @@ export const App = () => {
         })}
       >
         <Routes>
-          <Route path="/" element={<FullScren component={<HomePage />} />} />
+          <Route path="/" element={<HomePage />}/>
           <Route element={<PrivateWrapper />}>
             <Route path="game/*" element={<GamePage />} />
             <Route path="about" element={<AboutPage />} />
