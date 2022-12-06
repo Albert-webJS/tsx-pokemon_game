@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GameCard } from "../../../../components/GameCard/GameCard";
-import { Result } from "../../../../components/Result/Result";
-import { PlayerBoard } from "./component/PlayerBoard/PlayerBoard";
-import { IBoard } from "../../../../types/";
-import { IPokemon } from "../../../../types";
+import { GameCard } from "../../components/GameCard/GameCard";
+import { Result } from "../../components/Result/Result";
+import { PlayerBoard } from "../PlayerBoard/PlayerBoard";
+import { IBoard } from "../../types";
+import { IPokemon } from "../../types";
 import clasess from "./BoardPage.module.css";
 import { useSelector } from "react-redux";
-import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
+import { selectPokemonsData } from "../../store/pokemons/pokemons";
 
 const counterWin = (
   board: IBoard[],
@@ -25,7 +25,7 @@ const counterWin = (
       playerCounter2++;
     }
   });
-  return [playerCounter1, playerCounter2];
+  return [playerCounter1, playerCounter2] as const;
 };
 
 const BoardPage = (): JSX.Element => {

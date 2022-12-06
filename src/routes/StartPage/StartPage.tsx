@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GameCard } from "../../../../components";
+import { GameCard } from "../../components";
 import clasess from "./StartPage.module.css";
-import { IPokemon } from "../../../../types";
-import { selectPokemonsData } from "../../../../store/pokemons/pokemons";
+import { IPokemon } from "../../types";
+import { selectPokemonsData } from "../../store/pokemons/pokemons";
 import { useSelector } from "react-redux";
 
 const MAX_POKEMONS_SELECT = 5;
